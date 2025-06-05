@@ -6,7 +6,10 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     [SerializeField] private float speed = 10f;
-    public float bulletLifeTime;
+    public int lifetime = 2;
+    public int damage = 1;
+
+   
     public Vector2 dir
     {
         get;  
@@ -20,7 +23,7 @@ public class Bullet : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-       
+        
     }
 
     private void  FixedUpdate()
@@ -31,9 +34,14 @@ public class Bullet : MonoBehaviour
     {
         if (collision.collider.CompareTag("Enemy"))
         {
-            Destroy(collision.gameObject);
-            Destroy(gameObject,bulletLifeTime);
-           
+            Enemy enemy = collision.collider.GetComponent<Enemy>();
+            if (enemy.health != 0)
+            {
+                enemy.TakeDamage(damage);
+            }
+            Destroy(gameObject);
         }
+   
+
     }
 }
