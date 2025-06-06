@@ -22,6 +22,7 @@ public class PlayerShooterController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E) && Time.time >= nextFireTime)
         {
+            
             GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
             Transform nearestEnemy = FindNearestEnemy(enemies);
 
@@ -44,21 +45,20 @@ public class PlayerShooterController : MonoBehaviour
     private Transform FindNearestEnemy(GameObject[] enemies)
     {
         Transform nearestEnemy = null;
-        float distance = 0;
+        float minDistance = Mathf.Infinity;
         Vector2 currentPosition = transform.position;
 
         foreach (GameObject enemy in enemies)
         {
             if (enemy == null) continue;
-            float distance2 = Vector2.Distance(currentPosition, enemy.transform.position);
-            if (distance < distance2)
+            float distance = Vector2.Distance(currentPosition, enemy.transform.position);
+            if (distance < minDistance)
             {
-                distance = distance2;
+                minDistance = distance;
                 nearestEnemy = enemy.transform;
             }
         }
         return nearestEnemy;
-
 
     }
 }

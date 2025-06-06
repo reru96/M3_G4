@@ -7,7 +7,10 @@ public class Bullet : MonoBehaviour
 {
     [SerializeField] private float speed = 10f;
     public int lifetime = 2;
-    public int damage = 1;
+    private int damage = 1;
+    public AudioSource audioSource;
+
+    public int Damage => damage;
 
    
     public Vector2 dir
@@ -23,6 +26,9 @@ public class Bullet : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        audioSource = GetComponent<AudioSource>();
+        audioSource.Play();
+        Destroy(gameObject, lifetime);
         
     }
 
@@ -35,13 +41,8 @@ public class Bullet : MonoBehaviour
         if (collision.collider.CompareTag("Enemy"))
         {
             Enemy enemy = collision.collider.GetComponent<Enemy>();
-            if (enemy.health != 0)
-            {
-                enemy.TakeDamage(damage);
-            }
             Destroy(gameObject);
         }
-   
 
     }
 }

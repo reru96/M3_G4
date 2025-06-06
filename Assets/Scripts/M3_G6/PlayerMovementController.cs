@@ -14,16 +14,14 @@ public class PlayerMovementController : MonoBehaviour
     private Vector2 dir;
     private bool _isMoving;
     private bool turning;
-    public AudioSource audioSource;
-    public AudioClip footSteps;
+    
 
     // Start is called before the first frame update
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
         _animator = GetComponent<Animator>();
-        audioSource = GetComponent<AudioSource>();
-
+    
     }
 
     // Update is called once per frame
@@ -31,25 +29,6 @@ public class PlayerMovementController : MonoBehaviour
     {
         Movement();
         Animate();
-        PlayFootstep();
-    }
-    public void PlayFootstep()
-    {
-        audioSource.PlayOneShot(footSteps);
-        if (_rb.velocity.x != 0 && _rb.velocity.y !=0)
-        {
-            if (!audioSource.isPlaying)
-            {
-                audioSource.Play();
-            }
-        }
-        else
-        {
-            audioSource.Stop();
-
-        }
-
- 
     }
 
 
@@ -98,7 +77,7 @@ public class PlayerMovementController : MonoBehaviour
         }
 
         if (_isMoving)
-        {
+        { 
             _animator.SetFloat("x", x);
             _animator.SetFloat("y", y);
         }
